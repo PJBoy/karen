@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <chrono>
 #include <deque>
-#include <filesystem>
+#include <experimental/filesystem>
 #include <fstream>
 #include <initializer_list>
 #include <iomanip>
@@ -76,7 +76,7 @@ offsets_t loadOffsets(const std::experimental::filesystem::path& filepath)
     for (std::string line; std::getline(in, line);)
     {
         std::smatch match;
-        std::regex_match(line, match, std::regex(R"((.*): (\d+))"));
+        std::regex_match(line, match, std::regex(R"((.*): (\d+)\s*)"));
         ret[match[1]] = std::stoul(match[2]) * 1ms;
     }
 

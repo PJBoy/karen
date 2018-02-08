@@ -26,7 +26,7 @@ def image():
     def formatTimestamp(milliseconds):
         return f"{milliseconds // 3600000}:{milliseconds // 60000 % 60}:{milliseconds // 1000 % 60}.{milliseconds % 1000}"
         
-    return subprocess.run(f'ffmpeg -ss {formatTimestamp(int(bottle.request.GET.timestamp))} -i "{videoDirectory}/{bottle.request.GET.episodeName}.avi" -vframes 1 -f image2 -', stdout = subprocess.PIPE).stdout
+    return subprocess.run([f'ffmpeg', '-ss', f'{formatTimestamp(int(bottle.request.GET.timestamp))}', '-i', f'{videoDirectory}{bottle.request.GET.episodeName}.avi', '-vframes', '1', '-f', 'image2', '-'], stdout = subprocess.PIPE).stdout
     
 
 if len(sys.argv) != 5:
