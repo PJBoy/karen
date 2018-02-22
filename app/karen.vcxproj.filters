@@ -18,5 +18,25 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="k-mismatches\kangaroo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="k-mismatches\utility\array.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="k-mismatches\utility\circularArray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="k-mismatches\utility\mismatches.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="k-mismatches\utility\string.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="k-mismatches\kangaroo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

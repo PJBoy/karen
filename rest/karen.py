@@ -1,4 +1,4 @@
-import bottle, json, subprocess, sys
+import bottle, json, os, subprocess, sys
 
 @bottle.get()
 def search():
@@ -8,16 +8,13 @@ def search():
     n_results = int(karen.stdout.readline())
     for _ in range(n_results):
         subtitles = []
-        n_subtitles, episodeName = karen.stdout.readline().strip().split(', ')
-        n_subtitles = int(n_subtitles)
-        for _ in range(n_subtitles):
-            t = karen.stdout.readline().strip()
-            print(f"t = {episodeName}, {t}")
-            time_begin, time_end, text = t.split(', ', 2)
-            subtitles += [{'time_begin': int(time_begin), 'time_end': int(time_end), 'text': text}]
-        
+        similarity = float(karen.stdout.readline())
+        episodeName = karen.stdout.readline().strip()
+        t = karen.stdout.readline().strip()
         karen.stdout.readline()
-        ret += [{'episodeName': episodeName, 'subtitles': subtitles}]
+        print(f"similarity = {similarity}, t = {episodeName}, {t}")
+        time_begin, time_end, text = t.split(', ', 2)
+        ret += [{'similarity': similarity, 'episodeName': episodeName, 'time_begin': int(time_begin), 'time_end': int(time_end), 'text': text}]
         
     return json.dumps(ret)
 
@@ -26,8 +23,7 @@ def image():
     def formatTimestamp(milliseconds):
         return f"{milliseconds // 3600000}:{milliseconds // 60000 % 60}:{milliseconds // 1000 % 60}.{milliseconds % 1000}"
         
-    return subprocess.run([f'ffmpeg', '-ss', f'{formatTimestamp(int(bottle.request.GET.timestamp))}', '-i', f'{videoDirectory}{bottle.request.GET.episodeName}.avi', '-vframes', '1', '-f', 'image2', '-'], stdout = subprocess.PIPE).stdout
-    
+    return subprocess.run([f'ffmpeg', '-ss', f'{formatTimestamp(int(bottle.request.GET.timestamp))}', '-i', os.path.join(videoDirectory, f'{bottle.request.GET.episodeName}.avi'), '-vframes', '1', '-f', 'image2', '-'], stdout = subprocess.PIPE).stdout
 
 if len(sys.argv) != 5:
     print("karen <karen filepath> <videos directory> <subtitles directory> <offsets filepath>")

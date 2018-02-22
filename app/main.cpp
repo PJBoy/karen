@@ -1,3 +1,5 @@
+#include "k-mismatches/kangaroo.h"
+
 #include <algorithm>
 #include <chrono>
 #include <deque>
@@ -20,6 +22,10 @@
 
 using namespace std::literals;
 
+const static unsigned maxMismatches = 16;
+
+using episodeName_t = std::string;
+
 struct Subtitle
 {
     std::chrono::milliseconds time_begin, time_end;
@@ -28,7 +34,7 @@ struct Subtitle
 
 struct Episode
 {
-    std::string name;
+    episodeName_t name;
     std::deque<Subtitle> subtitles;
 };
 
@@ -38,7 +44,14 @@ struct EpisodeNameAndOffset
     std::chrono::milliseconds offset;
 };
 
-using offsets_t = std::unordered_map<decltype(Episode::name), std::chrono::milliseconds>;
+struct QueryResult
+{
+    unsigned mismatches;
+    episodeName_t episodeName;
+    Subtitle subtitle;
+};
+
+using offsets_t = std::unordered_map<episodeName_t, std::chrono::milliseconds>;
 
 std::vector<std::string> split(std::string text, std::string delimiter)
 {
@@ -165,37 +178,47 @@ std::list<Episode> loadEpisodes(const std::experimental::filesystem::path& subti
     return episodes;
 }
 
-Episode searchEpisode(const Episode& episode, const std::string& query)
+std::vector<QueryResult> searchEpisode(const Episode& episode, const std::string& query)
 {
-    Episode results{episode.name};
+    std::vector<QueryResult> results;
     for (const Subtitle& subtitle : episode.subtitles)
-        if (std::search(std::begin(subtitle.text), std::end(subtitle.text), std::begin(query), std::end(query)) != std::end(subtitle.text))
-            results.subtitles.push_back(subtitle);
+    {
+        Array<Mismatches> mismatches(kangaroo(std::size(query) / 4, query, subtitle.text));
+        if (std::size(mismatches) == 0)
+            continue;
+
+        Mismatches min_mismatches(*std::min_element(std::begin(mismatches), std::end(mismatches), [](const Mismatches& lhs, const Mismatches& rhs){ return unsigned(lhs) < unsigned(rhs); }));
+        if (!min_mismatches)
+            continue;
+
+        results.push_back({min_mismatches, episode.name, subtitle});
+    }
 
     return results;
 }
 
-std::vector<Episode> searchEpisodes(const std::list<Episode>& episodes, const std::string& query)
+std::vector<QueryResult> searchEpisodes(const std::list<Episode>& episodes, const std::string& query)
 {
-    std::vector<Episode> results;
+    std::vector<QueryResult> results;
     for (const Episode& episode : episodes)
-        if (Episode&& result(searchEpisode(episode, query)); !result.subtitles.empty())
-            results.push_back(result);
+        if (std::vector<QueryResult> result(searchEpisode(episode, query)); !result.empty())
+            results.insert(std::end(results), std::make_move_iterator(std::begin(result)), std::make_move_iterator(std::end(result)));
 
     return results;
 }
 
 void handleQuery(const std::list<Episode>& episodes, const std::string& query)
 {
-    const std::vector<Episode> results(searchEpisodes(episodes, query));
-    std::cout << std::size(results) << '\n' << std::flush;
-    for (const Episode& episode : results)
+    std::vector<QueryResult> results(searchEpisodes(episodes, query));
+    std::sort(std::begin(results), std::end(results), [](const QueryResult& lhs, const QueryResult& rhs){ return lhs.mismatches < rhs.mismatches; });
+    std::cout << std::size(results) << '\n';
+    for (const QueryResult& result : results)
     {
-        std::cout << std::size(episode.subtitles) << ", " << episode.name << '\n' << std::flush;
-        for (const Subtitle& subtitle : episode.subtitles)
-            std::cout << subtitle.time_begin.count() << ", " << subtitle.time_end.count() << ", " << subtitle.text << '\n';
-
-        std::cout << '\n' << std::flush;
+        std::cout
+            << 1 - float(result.mismatches) / (maxMismatches + 1) << '\n'
+            << result.episodeName << '\n'
+            << result.subtitle.time_begin.count() << ", " << result.subtitle.time_end.count() << ", " << result.subtitle.text << '\n'
+            << '\n';
     }
 }
 

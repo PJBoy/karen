@@ -1,3 +1,4 @@
+import os, subprocess
 import requests
 
 url_search = 'http://127.0.0.1:8000/search'
@@ -16,11 +17,25 @@ def get_image(episode, timestamp):
         raise RuntimeError(f'{r.status_code} - {r.reason} - {r.text}')
     return r.content
 
-episodes = get_search("Goo Lagoon")
-firstEpisodeResult = episodes[0]
-episodeName = firstEpisodeResult['episodeName']
-firstSubtitleResult = firstEpisodeResult['subtitles'][0]
+while True:
+    query = input('Query: ')
+    if not query:
+        break
+    
+    results = get_search(query)
+    if len(results) == 0:
+        print('No results')
+        continue
+    
+    firstResult = results[0]
+    episodeName = firstResult['episodeName']
+    timestamp = firstResult['time_begin']
+    print(f'Episode name: {episodeName}, similarity: {firstResult["similarity"]}, timestamp range: {timestamp}..{firstResult["time_end"]}')
+    print(f'Text: {firstResult["text"]}')
+    print()
 
-image = get_image(episodeName, firstSubtitleResult['time_begin'])
-with open('temp.jpg', 'wb') as f:
-    f.write(image)
+    image = get_image(episodeName, timestamp)
+    with open('temp.jpg', 'wb') as f:
+        f.write(image)
+
+    subprocess.call(f'rundll32 "C:\Program Files (x86)\Windows Photo Viewer\PhotoViewer.dll", ImageView_Fullscreen {os.path.abspath("temp.jpg")}')
