@@ -436,7 +436,7 @@ public:
 
 
 // Landau-Vishkin k-mismatch
-Array<Mismatches> kangaroo(unsigned k, const String& P, const String& T)
+Mismatches minKangaroo(unsigned k, const String& P, const String& T)
 {
     /*
         Preprocessing T and P for LCP queries is preprocessing the LCA of the suffix tree of T concatenated with P.
@@ -460,12 +460,12 @@ Array<Mismatches> kangaroo(unsigned k, const String& P, const String& T)
         n = std::size(T);
 
     if (n < m)
-        return Array<Mismatches>{};
+        return Mismatches{};
 
     LCP lcp(P, T);
-    Array<Mismatches> mismatchesList(n - m + 1);
+    Mismatches minMismatches(k, k + 1);
     
-    for (unsigned i = 0; i < std::size(mismatchesList); ++i)
+    for (unsigned i = 0; i < n - m + 1; ++i)
     {
         unsigned mismatches = 0;
         for (unsigned j = 0; j < m;)
@@ -480,8 +480,8 @@ Array<Mismatches> kangaroo(unsigned k, const String& P, const String& T)
             }
         }
 
-        mismatchesList[i] = Mismatches(k, mismatches);
+        minMismatches = std::min(minMismatches, Mismatches(k, mismatches));
     }
 
-    return mismatchesList;
+    return minMismatches;
 }

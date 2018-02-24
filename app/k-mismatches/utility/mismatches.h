@@ -35,6 +35,11 @@ public:
         return *this;
     }
 
+    bool operator<(Mismatches rhs) const
+    {
+        return *this && n < rhs.n;
+    }
+
     operator bool() const
     {
         return !no;
