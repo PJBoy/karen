@@ -3,6 +3,7 @@
 #include "utility/string.h"
 #include <algorithm>
 #include <cassert>
+#include <cmath>
 #include <initializer_list>
 #include <iostream>
 #include <memory>

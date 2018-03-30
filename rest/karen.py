@@ -2,6 +2,7 @@ import bottle, json, os, subprocess, sys
 
 @bottle.get()
 def search():
+    print(dict(bottle.request.GET))
     ret = []
     karen.stdin.write(f'{bottle.request.GET.q}\n')
     karen.stdin.flush()
@@ -23,6 +24,8 @@ def image():
     def formatTimestamp(milliseconds):
         return f"{milliseconds // 3600000}:{milliseconds // 60000 % 60}:{milliseconds // 1000 % 60}.{milliseconds % 1000}"
         
+    print(dict(bottle.request.GET))
+    bottle.response.content_type = 'image/jpeg'
     return subprocess.run([f'ffmpeg', '-ss', f'{formatTimestamp(int(bottle.request.GET.timestamp))}', '-i', os.path.join(videoDirectory, f'{bottle.request.GET.episodeName}.avi'), '-vframes', '1', '-f', 'image2', '-'], stdout = subprocess.PIPE).stdout
 
 if len(sys.argv) != 5:
@@ -32,4 +35,4 @@ if len(sys.argv) != 5:
 karenFilepath, videoDirectory, subtitleDirectory, offsetsFilepath = sys.argv[1:]
 karen = subprocess.Popen([karenFilepath, videoDirectory, subtitleDirectory, offsetsFilepath], stdin = subprocess.PIPE, stdout = subprocess.PIPE, universal_newlines = True)
 
-bottle.run(host = '127.0.0.1', port = 8000)
+bottle.run(host = '0.0.0.0', port = 8000)

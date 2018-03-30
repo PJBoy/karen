@@ -8,7 +8,7 @@ const unsigned ALPHABET_SIZE = 256;
 class Mismatches
 {
     bool no;
-    unsigned n, k;
+    unsigned k, n;
 
 public:
     Mismatches(bool no = true)
