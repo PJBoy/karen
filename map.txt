@@ -40,15 +40,15 @@ The Paper: 715000
 Valentine's Day: 51000
 Walking Small: 713000
 
-Artist Unknown: 
-Band Geeks: 
+Artist Unknown: 725000
+Band Geeks: 739000
 Big Pink Loser: 44000
-Bossy Boots: 
+Bossy Boots: 738000
 Bubble Buddy: 724000
 Christmas Special: 0
-Dumped: 
+Dumped: 754000
 Dying for Pie: 44000
-Gary Takes a Bath: 
+Gary Takes a Bath: 997000
 Grandma's Kisses: 44000
 I'm with Stupid: 645000
 I'm Your Biggest Fanatic: 716000
@@ -57,21 +57,21 @@ Jellyfish Hunter: 41000
 Life of Crime: 705000
 Mermaid Man and Barnacle Boy III: 43000
 No Free Rides: 45000
-Patty Hype: 
+Patty Hype: 698000
 Pre-hibernation Week: 42000
 Pressure: 44000
 Procrastination: -29000
-Sailor Mouth: 
-Sand, Spongebob and the Worm: 
-Shanghaied: 
-Something Smells: 
-Squid on Strike: 
-Squid's Day Off: 
+Sailor Mouth: 42000
+Sand, Spongebob and the Worm: 750000
+Shanghaied: 44000
+Something Smells: 43000
+Squid on Strike: 43000
+Squid's Day Off: 749000
 Squidville: 736000
 Squirrel Jokes: 732000
-Survival of the Idiots: 
+Survival of the Idiots: 45000
 The Fry Cook Games: 725000
-The Secret Box: 
+The Secret Box: 43000
 The Smoking Peanut: 702000
-Wormy: 
-Your Shoe's Untied: 
+Wormy: 43000
+Your Shoe's Untied: 44000

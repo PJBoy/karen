@@ -189,6 +189,9 @@ std::list<Episode> loadMultiEpisode(const std::experimental::filesystem::path& f
     std::list<Episode> ret;
     {
         auto it_episodeAndOffset(std::rbegin(episodeNameAndOffsets)), it_end_episodeAndOffset(std::rend(episodeNameAndOffsets));
+        if (it_episodeAndOffset == it_end_episodeAndOffset)
+            return ret;
+
         Episode episode{it_episodeAndOffset->name};
         for (auto it(std::rbegin(subtitles)), it_end(std::rend(subtitles)); it != it_end; ++it)
         {
