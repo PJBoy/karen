@@ -75,3 +75,36 @@ The Secret Box: 43000
 The Smoking Peanut: 702000
 Wormy: 43000
 Your Shoe's Untied: 44000
+
+As Seen on TV: 41000
+Born Again Krabs: 41000
+Can You Spare a Dime: 728000
+Clams: 728000
+Club Spongebob: 42000
+Doing Time: 706000
+I had an Accident: 730000
+Krab Borg: -2000
+Krabby Land: -4000
+Krusty Krab Training Video: 704000
+Mermaid Man and Barnacle Boy IV: 41000
+Mermaid Man and Barnacle Boy V: 703000
+Mid-life Crustacean: 717000
+Missing Identity: 43000
+My Pretty Seahorse: 704000
+New Student Starfish: 41000
+No Weenies Allowed: 41000
+One Krab's Trash: 687000
+Plankton's Army: 731000
+Pranks a Lot: 748000
+Rock a Bi-valve: 752000
+Spongebob BC: 43000
+Spongebob Meets the Strangler: 41000
+Spongebob's House Party: 42000
+Squilliam Returns: 726000
+The Camping Episode: 728000
+The Great Snail Race: 42000
+The Idiot Box: 741000
+The Nasty Patty: 41000
+The Snowball Effect: 42000
+The Spongebob Squarepants Lost Episode: 39000
+Wet Painters: 42000
