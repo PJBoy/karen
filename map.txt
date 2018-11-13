@@ -32,7 +32,7 @@ Scaredy Pants: 45000
 Sleepy Time: 51000
 Squeaky Boots: 707000
 Squidward Unfriendly Ghost: 708000
-Suds: 783000
+Suds: 722000
 Tea at the Treedome: 711000
 Texas: 51000
 The Chaperone: 50000
